@@ -1,5 +1,31 @@
-<h1>Test</h1>
-<input id="sessIdInput" type="text" value="SessionID">
+<input id="sess" type="text" value="SessionID">
+<input id="actName" type="text" value="Account Name">
+<input id="tabIdx" type="number" value="0">
+<button onclick="handleClick()">Run</button>
 <script>
-  console.log($("#sessIdInput")[0].value);
+	const $ = (q) => document.querySelector(q);
+  console.log($("#sess").value);
+  
+  function handleClick(){
+  	const sess = $("sess").value,
+    	act = $("actName").value,
+      tab = $("tabIdx").value;
+  	
+  	console.log(getHortiMods(act, tab, sess));
+  }
+  
+  function getHortiMods(name, index, sessId){
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", `https://www.pathofexile.com/character-window/get-stash-items?league=Harvest&tabIndex=${index}&accountName=${name}`, false);
+    xhr.withCredentials = true;
+		xhr.setRequestHeader("Cookie", `POESESSID=${sessId}`);
+    xhr.send(null);
+    var out = JSON.parse(xmlHttp.responseText);
+    var mods = [];
+    for (var item of out.items) {
+        if (!item.craftedMods) { continue; }
+        mods = mods.concat(item.craftedMods);
+    }
+    return mods;
+	}
 </script>
