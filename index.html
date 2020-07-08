@@ -4,28 +4,28 @@
 <button onclick="handleClick()">Run</button>
 <script>
 	const $ = (q) => document.querySelector(q);
-  console.log($("#sess").value);
+	console.log($("#sess").value);
   
-  function handleClick(){
-  	const sess = $("sess").value,
-    	act = $("actName").value,
-      tab = $("tabIdx").value;
-  	
-  	console.log(getHortiMods(act, tab, sess));
-  }
+	function handleClick(){
+		const sess = $("sess").value,
+		act = $("actName").value,
+		tab = $("tabIdx").value;
+
+		console.log(getHortiMods(act, tab, sess));
+	}
   
-  function getHortiMods(name, index, sessId){
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", `https://www.pathofexile.com/character-window/get-stash-items?league=Harvest&tabIndex=${index}&accountName=${name}`, false);
-    xhr.withCredentials = true;
+	function getHortiMods(name, index, sessId){
+		const xhr = new XMLHttpRequest();
+		xhr.open("GET", `https://www.pathofexile.com/character-window/get-stash-items?league=Harvest&tabIndex=${index}&accountName=${name}`, false);
+		xhr.withCredentials = true;
 		xhr.setRequestHeader("Cookie", `POESESSID=${sessId}`);
-    xhr.send(null);
-    var out = JSON.parse(xmlHttp.responseText);
-    var mods = [];
-    for (var item of out.items) {
-        if (!item.craftedMods) { continue; }
-        mods = mods.concat(item.craftedMods);
-    }
-    return mods;
+		xhr.send(null);
+		var out = JSON.parse(xmlHttp.responseText);
+		var mods = [];
+		for (var item of out.items) {
+			if (!item.craftedMods) { continue; }
+			mods = mods.concat(item.craftedMods);
+		}
+		return mods;
 	}
 </script>
