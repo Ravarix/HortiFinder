@@ -17,7 +17,7 @@
 		const xhr = new XMLHttpRequest();
 		xhr.open("GET", `https://www.pathofexile.com/character-window/get-stash-items?league=Harvest&tabIndex=${index}&accountName=${name}`, false);
 		xhr.withCredentials = true;
-		xhr.setRequestHeader("Cookie", `POESESSID=${sessId}`);
+		//xhr.setRequestHeader("Cookie", `POESESSID=${sessId}`);
 		xhr.send(null);
 		var out = JSON.parse(xmlHttp.responseText);
 		var mods = [];
