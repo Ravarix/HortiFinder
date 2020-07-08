@@ -16,6 +16,7 @@
   
 	function getHortiMods(name, index, sessId){
 		const xhr = new XMLHttpRequest();
+		document.cookie = `POESESSID=${sessId}`;
 		xhr.open("GET", `https://www.pathofexile.com/character-window/get-stash-items?league=Harvest&tabIndex=${index}&accountName=${name}`, false);
 		xhr.withCredentials = true;
 		//xhr.setRequestHeader("Cookie", `POESESSID=${sessId}`);
