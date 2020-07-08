@@ -2,6 +2,7 @@
 <input id="actName" type="text" value="Account Name">
 <input id="tabIdx" type="number" value="0">
 <button onclick="handleClick()">Run</button>
+<button onclick="sendExample()">Example</button>
 <script>
 	const $ = (q) => document.querySelector(q);
 	console.log($("#sess").value);
@@ -26,5 +27,11 @@
 			mods = mods.concat(item.craftedMods);
 		}
 		return mods;
+	}
+	function sendExample(){
+		var xhr = new XMLHttpRequest();
+		xhr.open('GET', 'http://example.com/', true);
+		xhr.withCredentials = true;
+		xhr.send(null);	
 	}
 </script>
