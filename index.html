@@ -24,12 +24,15 @@
 		window.open(`https://www.pathofexile.com/character-window/get-stash-items?league=Harvest&tabs=1&accountName=${act}&tabIndex=${tab}`);
 	}
 	
+	const cleanReg = /(\([^\)]*\)|<[^>]*>)/g;
 	function parseData(){
 		let data = JSON.parse($("#stashData").value);
 		let mods = [];
 		for (var item of data.items) {
 			if (!item.craftedMods) { continue; }
-			mods = mods.concat(item.craftedMods);
+			for(let mod of item.craftedMods) {
+				mods.push(mod.replace(cleanReg, '');	
+			}
 		}
 		mods.sort();
 		for (var mod of mods) { appendMod(mod); }
