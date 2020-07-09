@@ -27,7 +27,7 @@
 	function parseData(){
 		let data = JSON.parse($("#stashData").value);
 		let mods = [];
-		for (var item of out.items) {
+		for (var item of data.items) {
 			if (!item.craftedMods) { continue; }
 			mods = mods.concat(item.craftedMods);
 		}
