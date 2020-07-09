@@ -1,7 +1,14 @@
-<input id="sess" type="text" value="SessionID">
-<input id="actName" type="text" value="Account Name">
-<input id="tabIdx" type="number" value="0">
-<button onclick="openPoeWindow()">Run</button>
+<div>
+	<label for="actName">Account Name:</label><input id="actName" type="text" value="Name">
+	<label for="tabIdx">Tab Index></label><input id="tabIdx" type="number" value="0">
+	<button onclick="openPoeWindow()">Get Stash Data</button>
+</div>
+<div>
+	<label for="stashData">Paste Stash Data</label>
+	<textarea id="stashData"></textarea>
+</div>
+<button onclick="parseData()">Find Mods</button>
+	
 <script>
 	const $ = (q) => document.querySelector(q);
 	
@@ -14,6 +21,11 @@
 	
 	function openPoeWindow(){
 		window.open("https://www.pathofexile.com/character-window/get-stash-items?league=Harvest&tabs=1&accountName=Ravarix&tabIndex=0");
+	}
+	
+	function parseData(){
+		var data = JSON.parse($("#stashData").value);
+		console.log(data);
 	}
   
 	function getHortiMods(name, index, sessId){
