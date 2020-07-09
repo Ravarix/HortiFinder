@@ -38,6 +38,7 @@
 	function appendMod(mod){
 		let clone = template.content.cloneNode(true);
 		let dataNode = clone.querySelector("#modData");
-		dataNode.textContent = modBlock.appendChild(clone);
+		dataNode.textContent = mod;
+		modBlock.appendChild(clone);
 	}
 </script>
