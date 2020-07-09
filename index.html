@@ -1,6 +1,6 @@
 <div>
 	<label for="actName">Account Name:</label><input id="actName" type="text" value="Name">
-	<label for="tabIdx">Tab Index></label><input id="tabIdx" type="number" value="0">
+	<label for="tabIdx">Tab Index:</label><input id="tabIdx" type="number" value="0">
 	<button onclick="openPoeWindow()">Get Stash Data</button>
 </div>
 <div>
@@ -8,38 +8,36 @@
 	<textarea id="stashData"></textarea>
 </div>
 <button onclick="parseData()">Find Mods</button>
-	
+<div id="modBlock">
+</div>
+<template id="modRow">
+	<div id="modData"></div>
+</template
 <script>
 	const $ = (q) => document.querySelector(q);
-	
-	function handleClick(){
-		const sess = $("#sess").value,
-		act = $("#actName").value,
-		tab = $("#tabIdx").value;
-		console.log(getHortiMods(act, tab, sess));
-	}
+	const template = $("#modRow"),
+		modBlock = $("#modBlock");
 	
 	function openPoeWindow(){
-		window.open("https://www.pathofexile.com/character-window/get-stash-items?league=Harvest&tabs=1&accountName=Ravarix&tabIndex=0");
+		const act = $("#actName").value,
+		tab = $("#tabIdx").value;
+		window.open(`https://www.pathofexile.com/character-window/get-stash-items?league=Harvest&tabs=1&accountName=${accountName}&tabIndex=${tabIndex}`);
 	}
 	
 	function parseData(){
-		var data = JSON.parse($("#stashData").value);
-		console.log(data);
-	}
-  
-	function getHortiMods(name, index, sessId){
-		const xhr = new XMLHttpRequest();
-		document.cookie = `POESESSID=${sessId}`;
-		xhr.open("GET", `https://www.pathofexile.com/character-window/get-stash-items?league=Harvest&tabIndex=${index}&accountName=${name}`, false);
-		xhr.withCredentials = true;
-		xhr.send(null);
-		var out = JSON.parse(xhr.responseText);
-		var mods = [];
+		let data = JSON.parse($("#stashData").value);
+		let mods = [];
 		for (var item of out.items) {
 			if (!item.craftedMods) { continue; }
 			mods = mods.concat(item.craftedMods);
 		}
-		return mods;
+		mods.sort();
+		for (var mod of mods) { appendMod(mod); }
+	}
+	
+	function appendMod(mod){
+		let clone = template.content.cloneNode(true);
+		let dataNode = clone.querySelector("#modData");
+		dataNode.textContent = modBlock.appendChild(clone);
 	}
 </script>
