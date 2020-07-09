@@ -19,7 +19,6 @@
 		document.cookie = `POESESSID=${sessId}`;
 		xhr.open("GET", `https://www.pathofexile.com/character-window/get-stash-items?league=Harvest&tabIndex=${index}&accountName=${name}`, false);
 		xhr.withCredentials = true;
-		//xhr.setRequestHeader("Cookie", `POESESSID=${sessId}`);
 		xhr.send(null);
 		var out = JSON.parse(xmlHttp.responseText);
 		var mods = [];
@@ -28,11 +27,5 @@
 			mods = mods.concat(item.craftedMods);
 		}
 		return mods;
-	}
-	function sendExample(){
-		var xhr = new XMLHttpRequest();
-		xhr.open('GET', 'https://example.com/', true);
-		xhr.withCredentials = true;
-		xhr.send(null);	
 	}
 </script>
