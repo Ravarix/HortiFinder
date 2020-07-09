@@ -1,7 +1,7 @@
 <input id="sess" type="text" value="SessionID">
 <input id="actName" type="text" value="Account Name">
 <input id="tabIdx" type="number" value="0">
-<button onclick="handleClick()">Run</button>
+<button onclick="openPoeWindow()">Run</button>
 <script>
 	const $ = (q) => document.querySelector(q);
 	
@@ -10,6 +10,10 @@
 		act = $("#actName").value,
 		tab = $("#tabIdx").value;
 		console.log(getHortiMods(act, tab, sess));
+	}
+	
+	function openPoeWindow(){
+		window.open("https://www.pathofexile.com/character-window/get-stash-items?league=Harvest&tabs=1&accountName=Ravarix&tabIndex=0");
 	}
   
 	function getHortiMods(name, index, sessId){
