@@ -31,7 +31,7 @@
 	
 	function openPoeWindow(){
 		const act = $("#actName")[0].value,
-		tab = $("#tabIdx").value;
+		tab = $("#tabIdx")[0].value;
 		window.open(`https://www.pathofexile.com/character-window/get-stash-items?league=Harvest&tabs=1&accountName=${act}&tabIndex=${tab}`);
 	}
 	
@@ -42,8 +42,8 @@
 		for (var item of data.items) {
 			if (!item.craftedMods) { continue; }
 			for(let mod of item.craftedMods) {
-      	let clean = mod.replace(cleanReg, '');
-        mods.set(clean, mods.has(clean) ? mods.get(clean) + 1 : 1);
+				let clean = mod.replace(cleanReg, '');
+				mods.set(clean, mods.has(clean) ? mods.get(clean) + 1 : 1);
 			}
 		}
 		for (var mod of mods.keys()) { appendMod(mod, mods.get(mod)); }
