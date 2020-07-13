@@ -1,9 +1,9 @@
 <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">
 
-<form class="pure-form">
+<form class="pure-form" onsubmit="return false">
   <fieldset>
     <legend>Get Stash Data</legend>
-    <input id="actName" type="text" placeholder="Name">
+    <input id="actName" type="text" placeholder="Account Name">
     <input id="tabIdx" type="number" placeholder="Tab">
     <button class="pure-button pure-button-primary" onclick="openPoeWindow()">Go</button>
   <fieldset>
@@ -11,11 +11,11 @@
   </fieldset>
     <label for="stashData">Paste Stash Data</label>
 	  <textarea id="stashData"></textarea>
-    <button class="pure-button pure-button-primary" onclick="parseData()">Find Mods</button>
+    <button id="filter" class="pure-button pure-button-primary" onclick="parseData()">Find Mods</button>
   </fieldset>
 </form>
 <form class="pure-form">
-  <input id="filter" type="text" placeholder="Filter...">
+  <input id="filter" type="text" placeholder="Filter..." onchange="update()">
 </form>
 <table class="pure-table pure-table-striped" id="modTable"></table>
 <template id="modRow">
@@ -30,7 +30,7 @@
 		modBlock = $("#modTable")[0];
 	
 	function openPoeWindow(){
-		const act = $("#actName").value,
+		const act = $("#actName")[0].value,
 		tab = $("#tabIdx").value;
 		window.open(`https://www.pathofexile.com/character-window/get-stash-items?league=Harvest&tabs=1&accountName=${act}&tabIndex=${tab}`);
 	}
@@ -57,4 +57,23 @@
     countNode.textContent = count;
 		modBlock.appendChild(clone);
 	}
+  
+  const filterEle = $("#filter")[0];
+  function update(){
+  	let filterVal = filterEle.value;
+    let tokens = filterVal.toUpperCase();
+    console.log(filterVal);
+    for(let row of $("tr")) {
+    	let rowEle = row.querySelector(".modData");
+      let rowData = rowEle.textContent.toUpperCase();
+      let valid = true;
+      for(let token of tokens){
+      	if (rowData.indexOf(token) < 0) {
+        	valid = false;
+          break;
+        }
+      }
+      rowEle.style.display = valid ? "" : "none";
+    }
+  }
 </script>
