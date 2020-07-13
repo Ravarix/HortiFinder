@@ -61,7 +61,7 @@
   const filterEle = $("#filter")[0];
   function update(){
 	let filterVal = filterEle.value;
-	let tokens = filterVal.toUpperCase();
+	let tokens = filterVal.toUpperCase().split(" ");
 	console.log(filterVal);
 	for(let row of $("tr")) {
 		let rowData = row.querySelector(".modData").textContent.toUpperCase();
