@@ -64,8 +64,7 @@
 	let tokens = filterVal.toUpperCase();
 	console.log(filterVal);
 	for(let row of $("tr")) {
-		let rowEle = row.querySelector(".modData");
-		let rowData = rowEle.textContent.toUpperCase();
+		let rowData = row.querySelector(".modData").textContent.toUpperCase();
 		let valid = true;
 		for(let token of tokens){
 			if (rowData.indexOf(token) < 0) {
@@ -73,7 +72,7 @@
 				break;
 			}
 		}
-		rowEle.style.display = valid ? "" : "none";
+		row.style.display = valid ? "" : "none";
 	}
   }
 </script>
