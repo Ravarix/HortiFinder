@@ -11,7 +11,7 @@
   </fieldset>
     <label for="stashData">Paste Stash Data</label>
 	  <textarea id="stashData"></textarea>
-    <button id="filter" class="pure-button pure-button-primary" onclick="parseData()">Find Mods</button>
+    <button class="pure-button pure-button-primary" onclick="parseData()">Find Mods</button>
   </fieldset>
 </form>
 <form class="pure-form">
@@ -52,28 +52,28 @@
 	function appendMod(mod, count){
 		let clone = template.content.cloneNode(true);
 		let dataNode = clone.querySelector(".modData");		
-    let countNode = clone.querySelector(".modCount");
+		let countNode = clone.querySelector(".modCount");
 		dataNode.textContent = mod;
-    countNode.textContent = count;
+		countNode.textContent = count;
 		modBlock.appendChild(clone);
 	}
   
   const filterEle = $("#filter")[0];
   function update(){
-  	let filterVal = filterEle.value;
-    let tokens = filterVal.toUpperCase();
-    console.log(filterVal);
-    for(let row of $("tr")) {
-    	let rowEle = row.querySelector(".modData");
-      let rowData = rowEle.textContent.toUpperCase();
-      let valid = true;
-      for(let token of tokens){
-      	if (rowData.indexOf(token) < 0) {
-        	valid = false;
-          break;
-        }
-      }
-      rowEle.style.display = valid ? "" : "none";
-    }
+	let filterVal = filterEle.value;
+	let tokens = filterVal.toUpperCase();
+	console.log(filterVal);
+	for(let row of $("tr")) {
+		let rowEle = row.querySelector(".modData");
+		let rowData = rowEle.textContent.toUpperCase();
+		let valid = true;
+		for(let token of tokens){
+			if (rowData.indexOf(token) < 0) {
+				valid = false;
+				break;
+			}
+		}
+		rowEle.style.display = valid ? "" : "none";
+	}
   }
 </script>
