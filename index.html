@@ -1,24 +1,33 @@
 <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">
 
-<div>
-	<label for="actName">Account Name:</label><input id="actName" type="text" value="Name">
-	<label for="tabIdx">Tab Index:</label><input id="tabIdx" type="number" value="0">
-	<button onclick="openPoeWindow()">Get Stash Data</button>
-</div>
-<div>
-	<label for="stashData">Paste Stash Data</label>
-	<textarea id="stashData"></textarea>
-</div>
-<button onclick="parseData()">Find Mods</button>
-<div id="modBlock">
-</div>
+<form class="pure-form">
+  <fieldset>
+    <legend>Get Stash Data</legend>
+    <input id="actName" type="text" placeholder="Name">
+    <input id="tabIdx" type="number" placeholder="Tab">
+    <button class="pure-button pure-button-primary" onclick="openPoeWindow()">Go</button>
+  <fieldset>
+  
+  </fieldset>
+    <label for="stashData">Paste Stash Data</label>
+	  <textarea id="stashData"></textarea>
+    <button class="pure-button pure-button-primary" onclick="parseData()">Find Mods</button>
+  </fieldset>
+</form>
+<form class="pure-form">
+  <input id="filter" type="text" placeholder="Filter...">
+</form>
+<table class="pure-table pure-table-striped" id="modTable"></table>
 <template id="modRow">
-	<div id="modData"></div>
+  <tr>
+    <td class="modCount"></td>
+    <td class="modData"></td>
+  </tr>
 </template>
 <script>
-	const $ = (q) => document.querySelector(q);
-	const template = $("#modRow"),
-		modBlock = $("#modBlock");
+	const $ = (q) => document.querySelectorAll(q);
+	const template = $("#modRow")[0],
+		modBlock = $("#modTable")[0];
 	
 	function openPoeWindow(){
 		const act = $("#actName").value,
@@ -28,22 +37,24 @@
 	
 	const cleanReg = /(\([^\)]*\)|<[^>]*>)/g;
 	function parseData(){
-		let data = JSON.parse($("#stashData").value);
-		let mods = [];
+		let data = JSON.parse($("#stashData")[0].value);
+		let mods = new Map();
 		for (var item of data.items) {
 			if (!item.craftedMods) { continue; }
 			for(let mod of item.craftedMods) {
-				mods.push(mod.replace(cleanReg, ''));	
+      	let clean = mod.replace(cleanReg, '');
+        mods.set(clean, mods.has(clean) ? mods.get(clean) + 1 : 1);
 			}
 		}
-		mods.sort();
-		for (var mod of mods) { appendMod(mod); }
+		for (var mod of mods.keys()) { appendMod(mod, mods.get(mod)); }
 	}
 	
-	function appendMod(mod){
+	function appendMod(mod, count){
 		let clone = template.content.cloneNode(true);
-		let dataNode = clone.querySelector("#modData");
+		let dataNode = clone.querySelector(".modData");		
+    let countNode = clone.querySelector(".modCount");
 		dataNode.textContent = mod;
+    countNode.textContent = count;
 		modBlock.appendChild(clone);
 	}
 </script>
