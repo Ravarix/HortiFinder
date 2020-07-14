@@ -40,7 +40,7 @@
 		let data = JSON.parse($("#stashData")[0].value);
 		let mods = new Map();
 		for (var item of data.items) {
-			if (!item.craftedMods) { continue; }
+			if (!item.craftedMods || item.typeLine !== "Horticrafting Station") { continue; }
 			for(let mod of item.craftedMods) {
 				let clean = mod.replace(cleanReg, '');
 				mods.set(clean, mods.has(clean) ? mods.get(clean) + 1 : 1);
